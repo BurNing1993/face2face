@@ -1,2 +1,7 @@
 # face2face
-web facetime
+
+## dev https
+
+```sh
+HTTPS=true  yarn start
+```
