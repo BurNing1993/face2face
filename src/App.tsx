@@ -1,28 +1,51 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { getCameraVideo } from './utils/webRTC'
+import emitter from './utils/emitter'
+import './utils/signal'
 
 function App() {
+  const [remoteCode, setRemoteCode] = useState('');
+  const [localCode, setLocalCode] = useState('');
+  const [connectState, setConnectState] = useState(false);
+  const videoEl = useRef<HTMLVideoElement | null>(null)
   useEffect(() => {
-    if (!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
-    }
-    // Let's check whether notification permissions have already been granted
-    else if (Notification.permission === "granted") {
-      // If it's okay let's create a notification
-      var notification = new Notification("Hi there!");
-    }
-    // Otherwise, we need to ask the user for permission
-    else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then(function (permission) {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-          var notification = new Notification("Hi there!");
-        }
-      });
-    }
+    emitter.on('open', () => {
+      console.log('app open');
+      emitter.emit('send', { event: 'login' })
+    })
+    emitter.on('logined', ({ code }) => {
+      console.log('app logined', code);
+      setLocalCode(code)
+    })
   }, [])
+
+  const handleContextMenu = (e: unknown) => {
+  }
+  const connect = () => {
+    if (remoteCode && remoteCode.length === 6) {
+      emitter.emit('send', {
+        event: 'connect',
+        data:{
+          remote: remoteCode
+        }
+      })
+    }
+  }
   return (
-    <div className="container bg-black h-screen mx-auto">
-      QQQ
+    <div className="container h-screen mx-auto text-center">
+      {
+        connectState ? <video ref={videoEl} className="w-full h-full"></video> :
+          <>
+            <div>你的控制码 <span> {localCode} </span></div>
+            <input
+              className="border border-black"
+              type="text"
+              value={remoteCode}
+              onChange={(e) => setRemoteCode(e.target.value)}
+            />
+            <button className="border border-black" onClick={connect}>确认</button>
+          </>
+      }
     </div>
   );
 }
