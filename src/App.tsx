@@ -5,7 +5,7 @@ import './utils/signal'
 function App() {
   const [remoteCode, setRemoteCode] = useState('');
   const [localCode, setLocalCode] = useState('');
-  const [connectState, _] = useState(false);
+  const [connectState, setConnectState] = useState(false);
   const videoEl = useRef<HTMLVideoElement | null>(null)
   useEffect(() => {
     emitter.on('open', () => {
@@ -26,6 +26,8 @@ function App() {
           remote: remoteCode
         }
       })
+    }else{
+      setConnectState(false)
     }
   }
   return (
