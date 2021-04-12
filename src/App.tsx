@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getCameraVideo } from './utils/webRTC'
 import emitter from './utils/emitter'
 import './utils/signal'
 
 function App() {
   const [remoteCode, setRemoteCode] = useState('');
   const [localCode, setLocalCode] = useState('');
-  const [connectState, setConnectState] = useState(false);
+  const [connectState, _] = useState(false);
   const videoEl = useRef<HTMLVideoElement | null>(null)
   useEffect(() => {
     emitter.on('open', () => {
@@ -19,8 +18,6 @@ function App() {
     })
   }, [])
 
-  const handleContextMenu = (e: unknown) => {
-  }
   const connect = () => {
     if (remoteCode && remoteCode.length === 6) {
       emitter.emit('send', {
