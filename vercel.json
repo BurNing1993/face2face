@@ -1,7 +1,7 @@
 {
     "rewrites": [
       {
-        "source": "wss://localhost:8000",
+        "source": "/wss",
         "destination": "ws://182.61.61.7:8000"
       }
     ]

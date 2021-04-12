@@ -1,6 +1,6 @@
 import emitter from './emitter'
 
-const wsUrl = "ws://localhost:8000"
+const wsUrl = "wss://localhost/wws"
 
 function createSocket() {
   const socket = new WebSocket(wsUrl);
