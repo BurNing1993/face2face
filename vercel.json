@@ -1,0 +1,10 @@
+{
+    "rewrites": [
+      {
+        "source": "wss://localhost:8000",
+        "destination": "ws://182.61.61.7:8000"
+      }
+    ]
+  }
+  
+  

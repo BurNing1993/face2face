@@ -62,20 +62,9 @@ pc.onicecandidate = function (e) {
     })
   }
 }
-
-let candidates: RTCIceCandidateInit[] = []
-export async function addIceCandidate(candidate: RTCIceCandidateInit) {
-  if (candidate) {
-    candidates.push(candidate)
-  }
-  if (pc.remoteDescription && pc.remoteDescription.type) {
-    for (const can of candidates) {
-      await pc.addIceCandidate(new RTCIceCandidate(can))
-    }
-    candidates = []
-  }
-}
-
+/**
+ *  发起端
+ */
 /**
  * 发出offer 发起连接请求
  * @returns 
@@ -99,17 +88,30 @@ export async function setRemote(description: RTCSessionDescriptionInit) {
   await pc.setRemoteDescription(description)
 }
 
+let candidates: RTCIceCandidateInit[] = []
+export async function addIceCandidate(candidate: RTCIceCandidateInit) {
+  if (candidate) {
+    candidates.push(candidate)
+  }
+  if (pc.remoteDescription && pc.remoteDescription.type) {
+    for (const can of candidates) {
+      await pc.addIceCandidate(new RTCIceCandidate(can))
+    }
+    candidates = []
+  }
+}
+
 /**
- * P2
+ *  接收端
  */
 export async function createAnswer(offer: RTCSessionDescriptionInit) {
   try {
     const cameraStream = await getCameraStream()
     //@ts-ignore https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addStream
-    // pc.addStream(cameraStream);
-    cameraStream.getTracks().forEach(track => {
-      pc.addTrack(track)
-    })
+    pc.addStream(cameraStream);
+    // cameraStream.getTracks().forEach(track => {
+    //   pc.addTrack(track)
+    // })
     await pc.setRemoteDescription(offer)
     await pc.setLocalDescription(await pc.createAnswer())
     console.log('answer', JSON.stringify(pc.localDescription));
