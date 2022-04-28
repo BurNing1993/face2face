@@ -4,7 +4,7 @@ const Header: React.FC = () => {
   return (
     <header className="h-10 text-center">
       f2f
-      <label
+      {/* <label
         htmlFor="Toggle1"
         className="inline-flex items-center space-x-4 cursor-pointer dark:text-coolGray-100"
       >
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
           <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto dark:bg-coolGray-800"></div>
         </span>
         <span>Right</span>
-      </label>
+      </label> */}
     </header>
   )
 }

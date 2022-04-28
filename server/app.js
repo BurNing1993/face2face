@@ -1,5 +1,7 @@
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8000 });
+const wss = new WebSocket.Server({ port: 8000 }, () => {
+  console.log('ws server started at port 8000');
+});
 const code2ws = new Map()
 
 const getCode = () => Math.floor(Math.random() * (999999 - 100000)) + 100000;
@@ -19,7 +21,7 @@ wss.on('connection', function connection(ws, request) {
   console.log(code2ws.keys());
   ws.on('message', function incoming(message) {
     // {event,data}
-    console.log('incoming message', message);
+    console.log('incoming message', message.toString());
     let parsedMessage = {}
     try {
       parsedMessage = JSON.parse(message);
