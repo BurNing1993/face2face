@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Message from './components/Message'
 import Home from './pages/home'
+import Test from './pages/test'
 import { MessageContext } from './utils/message'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <main className="container mx-auto">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/test" element={<Test />} />
             </Routes>
           </main>
         </div>

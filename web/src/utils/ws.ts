@@ -35,6 +35,10 @@ ws.onmessage = (event) => {
   }
 }
 
+ws.onerror = (error) => {
+  console.error(error)
+}
+
 export function send(msg: WsMessage) {
   if (ws.readyState === WebSocket.OPEN) {
     ws.send(JSON.stringify(msg))
